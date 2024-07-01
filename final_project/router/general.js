@@ -23,12 +23,12 @@ public_users.get('/isbn/:isbn',function (req, res) {
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
-    for (const book in books) {
-        var filtered_books = {};
-        if (books[book][author] === req.params.author) {
-            filtered_books[book] = books[book];
-        }
-    };
+    let keys = Object.keys(books);
+    let filtered_books = [];
+    for (let key in keys) {
+        if (books.key[author] == req.params.author){
+            filtered_books.push(books[key]);
+        }};
     res.send(JSON.stringify(filtered_books, null, 4)); 
     });
 
