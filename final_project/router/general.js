@@ -78,4 +78,13 @@ public_users.get('/review/:isbn',function (req, res) {
   res.send(JSON.stringify(books[req.params.isbn].reviews, null, 4))
 });
 
+let promiseBooks = new Promise((resolve,reject) => {
+    setTimeout(() => {
+      resolve(JSON.stringify(books, null, 4))
+    },6000)})
+
+promiseBooks.then((successMessage) => {
+    console.log("From Callback " + successMessage)
+  })
+
 module.exports.general = public_users;
