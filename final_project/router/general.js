@@ -54,7 +54,6 @@ public_users.get('/isbn/:isbn',function (req, res) {
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
-    let keys = Object.keys(books);
     let filtered_books = [];
     for (let key in books) {
         if (books[key].author === req.params.author){
@@ -66,7 +65,6 @@ public_users.get('/author/:author',function (req, res) {
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
-    let keys = Object.keys(books);
     let filtered_books = [];
     for (let key in books) {
         if (books[key].title === req.params.title){
@@ -91,10 +89,19 @@ let promiseIsbn = new Promise((resolve, reject) => {
 
 let promiseAuthor = new Promise((resolve, reject) => {
     let author = prompt("Please enter author: ");
-    let keys = Object.keys(books);
     let filtered_books = [];
     for (let key in books) {
         if (books[key].author === author){
+            filtered_books.push(books[key]);
+        }}
+    resolve(JSON.stringify(filtered_books, null, 4));
+});
+
+let promiseTitle = new Promise((resolve, reject) => {
+    let title = prompt("Please enter title: ");
+    let filtered_books = [];
+    for (let key in books) {
+        if (books[key].title === title){
             filtered_books.push(books[key]);
         }}
     resolve(JSON.stringify(filtered_books, null, 4));
@@ -110,6 +117,10 @@ promiseIsbn.then((successMessage) => {
 
 promiseAuthor.then((successMessage) => {
     console.log("From Callback books by author:\n" + successMessage)
+  });
+
+promiseTitle.then((successMessage) => {
+    console.log("From Callback books by title:\n" + successMessage)
   });
 
 module.exports.general = public_users;
