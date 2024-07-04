@@ -4,6 +4,8 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+let prompt = require('prompt-sync')();
+
 // Check if a user with the given username already exists
 const doesExist = (username) => {
     // Filter the users array for any user with the same username
@@ -79,12 +81,21 @@ public_users.get('/review/:isbn',function (req, res) {
 });
 
 let promiseBooks = new Promise((resolve,reject) => {
-    setTimeout(() => {
-      resolve(JSON.stringify(books, null, 4))
-    },6000)})
+    resolve(JSON.stringify(books, null, 4))
+    });
+
+let promiseIsbn = new Promise((resolve, reject) => {
+    let isbn = prompt("Please enter ISBN: ");
+    resolve(JSON.stringify(books[isbn], null, 4));
+});
 
 promiseBooks.then((successMessage) => {
-    console.log("From Callback " + successMessage)
-  })
+    console.log("From Callback book list:\n" + successMessage)
+  });
+
+promiseIsbn.then((successMessage) => {
+    console.log("From Callback book by ISBN:\n" + successMessage)
+  });
+
 
 module.exports.general = public_users;
