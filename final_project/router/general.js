@@ -89,6 +89,17 @@ let promiseIsbn = new Promise((resolve, reject) => {
     resolve(JSON.stringify(books[isbn], null, 4));
 });
 
+let promiseAuthor = new Promise((resolve, reject) => {
+    let author = prompt("Please enter author: ");
+    let keys = Object.keys(books);
+    let filtered_books = [];
+    for (let key in books) {
+        if (books[key].author === author){
+            filtered_books.push(books[key]);
+        }}
+    resolve(JSON.stringify(filtered_books, null, 4));
+});
+
 promiseBooks.then((successMessage) => {
     console.log("From Callback book list:\n" + successMessage)
   });
@@ -97,5 +108,8 @@ promiseIsbn.then((successMessage) => {
     console.log("From Callback book by ISBN:\n" + successMessage)
   });
 
+promiseAuthor.then((successMessage) => {
+    console.log("From Callback books by author:\n" + successMessage)
+  });
 
 module.exports.general = public_users;
